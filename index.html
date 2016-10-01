@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+
+
+			<style>
+
+				.header-cont {
+				width:100%;
+				position:fixed;
+				top:0px;
+				}
+
+				#btnnext, #zoomin {  
+
+				margin-left: 5px;
+				margin-top: 1px;
+				width: 84px;
+				height: 25px;   
+				border: none;
+				color: white;   
+				font-size:14px;
+				font-weight:700;
+				}
+
+				#btnpre , #zoomout {
+				margin-right: 5px;      
+				margin-top: 1px;
+				width: 84px;
+				height: 25px;     
+				border: none;
+				color: white;   
+				font-size:14px;
+				font-weight:700;
+				}
+
+				#test3 {
+
+				width: 50px;
+				height: 20px;     
+
+				color: gray;   
+				font-size:20px;
+				font-weight:700;
+				}
+
+				p {
+				float:left;     
+				color: gray;   
+				font-size:14px;
+				font-weight:700;
+				margin-left: 10px;      
+				margin-top: 1px;
+				}  
+			</style>
+
+
+			<script type="text/javascript" src="jquery.min.js"></script>
+			<script>
+				$(document).ready(function(){
+				var i = 1;
+				var test = "";
+				var book = "./BW362_EN_Col11_1_files/page";
+
+				$("#btnnext").click(function(){
+				i = i + 1;
+				var pagenum = pad(i,4);		 
+				test = book + pagenum + ".swf";
+				$("object").attr("data", test);
+				$("#test3").val(i);
+				});
+
+				$("#btnpre").click(function(){
+				i = i - 1;
+				var pagenum = pad(i,4);		 
+				test = book + pagenum + ".swf";
+				$("object").attr("data", test);
+				$("#test3").val(i);
+				});
+
+				$('#test3').keypress(function(event){
+
+				var keycode = (event.keyCode ? event.keyCode : event.which);
+				if(keycode == '13'){
+				//alert('You pressed a "enter" key in textbox');
+				i = parseInt($("#test3").val());
+				var pagenum = pad(i,4);		 
+				test = book + pagenum + ".swf";
+				$("object").attr("data", test);
+				$("#test3").val(i);
+				}
+
+				});
+				$("#zoomin").click(function(){
+				zoomin();
+				});
+
+
+				$("#zoomout").click(function(){
+				zoomout();
+
+				});
+
+
+				// action on key up
+				$(document).keyup(function(e) {
+				if(e.which == 17) {
+				isCtrl = false;
+				}
+
+				});
+				// action on key down
+				$(document).keydown(function(e) {
+				if(e.which == 17) {
+				isCtrl = true; 
+				}
+
+				if(e.which == 39 && isCtrl) { 
+
+				i = parseInt($("#test3").val());
+				next(i,book);
+				} 
+
+				if(e.which == 37 && isCtrl) { 
+
+				i = parseInt($("#test3").val());
+				previous(i,book);
+				} 
+
+
+				if(e.which == 191 && isCtrl) { 
+				document.getElementById("test3").focus();
+
+				}
+
+				if(e.which == 38 && isCtrl) { 
+				zoomin();
+
+				}
+
+				if(e.which == 40 && isCtrl) { 
+				zoomout();
+
+				}		
+
+
+				});
+
+
+				});
+
+				function pad(num, size) {
+				var s = num+"";
+				while (s.length < size) s = "0" + s;
+						return s;
+						}
+
+						function next(i,book) {
+
+						i = i + 1;
+						var pagenum = pad(i,4);		 	
+						test = book + pagenum + ".swf";
+						$("object").attr("data", test);
+						$("#test3").val(i);
+
+						}
+
+						function previous(i,book) {
+
+						i = i - 1;
+						var pagenum = pad(i,4);		 	
+						test = book + pagenum + ".swf";
+						$("object").attr("data", test);
+						$("#test3").val(i);
+
+						}
+
+
+						function zoomin() {
+						var width =  parseInt($("object").attr("width"));
+						width = width +  100.
+
+						var height =  parseInt($("object").attr("height"));
+						height = height +  100.
+						$("object").attr("height", height);
+
+
+						}
+
+						function zoomout() {
+
+						var width =  parseInt($("object").attr("width"));
+						width = width -  100.
+
+						var height =  parseInt($("object").attr("height"));
+						height = height -  100.
+						$("object").attr("height", height);
+
+						}
+
+
+					</script>
+
+
+				</head>
+
+
+				<body>
+
+
+					<div class="header-cont">
+						<div>
+							<button id = 'btnpre' >Previous </button>
+							<input type="text" id="test3" value="1">
+								<button id = 'btnnext' align = "right">Next </button>
+								<button id = 'zoomin' >Zoom + </button>
+								<button id = 'zoomout' >Zoom - </button>
+							</div>
+						</div>
+
+						<div>
+							<object width="1500" height="1000" data="./BW362_EN_Col11_1_files/page0001.swf"></object>
+						</div>
+
+
+
+
+
+					</body></html>
